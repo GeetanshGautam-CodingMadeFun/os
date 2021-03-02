@@ -1,9 +1,5 @@
 #include "print.h"
 
-// grid system
-const static size_t NUM_COLS = 80;
-const static size_t NUM_ROWS = 25;
-
 struct Char {
 	uint8_t character;
 	uint8_t color;
@@ -92,3 +88,44 @@ void print_set_raw_color(uint8_t col) {
 	color = col;
 }
 
+void print_set_col_rel(uint8_t index) {
+	col += index;
+	if (col < 0) { col = 0; }
+	else if (col > NUM_COLS) { col = NUM_COLS; }
+
+}
+
+void print_set_row_rel(uint8_t index) {
+	row += index;
+	if (row < 0) { row = 0; }
+	else if (row > NUM_ROWS) { row = NUM_ROWS; }
+}
+
+void print_set_coords (uint8_t x, uint8_t y)
+{
+	row = y;
+	col = x;
+	if (row < 0) { row = 0; }
+	else if (row > NUM_ROWS) { row = NUM_ROWS; }
+
+	if (col < 0) { col = 0; }
+	else if (col > NUM_COLS) { col = NUM_COLS; }
+
+}
+
+void print_set_row(uint8_t index)
+{
+	row = index;
+
+	if (row < 0) { row = 0; }
+	else if (row > NUM_ROWS) { row = NUM_ROWS; }
+
+}
+
+void print_set_col(uint8_t index)
+{
+	col = index;
+
+	if (col < 0) { col = 0; }
+	else if (col > NUM_COLS) { col = NUM_COLS; }
+}
