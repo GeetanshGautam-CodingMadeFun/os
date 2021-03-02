@@ -1,4 +1,5 @@
 #include "print.h"
+#include <stdbool.h>
 
 struct Char {
 	uint8_t character;
@@ -84,8 +85,8 @@ void print_set_color(uint8_t foreground, uint8_t background) {
 	color = foreground + (background << 4);
 }
 
-void print_set_raw_color(uint8_t col) {
-	color = col;
+void print_set_raw_color(uint8_t Color) {
+	color = Color;
 }
 
 void print_set_col_rel(uint8_t index) {
@@ -128,4 +129,33 @@ void print_set_col(uint8_t index)
 
 	if (col < 0) { col = 0; }
 	else if (col > NUM_COLS) { col = NUM_COLS; }
+}
+
+void print_highlight_row(uint8_t rowIndex, bool overwrite, bool setAsActiveRow, uint8_t rawColor)
+{
+
+	if (rowIndex > NUM_ROWS) { return; }
+
+	uint8_t prevRow = row;
+	row = rowIndex;
+	col = 0;
+
+	color = rawColor;
+
+	// struct char character;
+
+	for (uint8_t i = 0; i <= NUM_COLS; i++) {
+
+		if (overwrite) {
+			print_str(" "); // calls col++
+		}
+		else {
+			print_char(buffer[col + NUM_COLS * row].character); // calls col++
+		}
+	}
+
+	if (!setAsActiveRow) {
+		print_set_coords(0, rowIndex);
+	}
+
 }
